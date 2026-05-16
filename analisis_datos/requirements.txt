@@ -1,0 +1,15 @@
+# Manejo de datos y archivos CSV
+pandas>=1.3.0
+
+# Procesamiento de Lenguaje Natural (Limpieza y Lematización)
+spacy>=3.0.0
+
+# Inteligencia Artificial (Modelo BERT de Sentimientos)
+transformers>=4.20.0
+torch>=1.9.0
+
+# Visualización (Gráficas)
+matplotlib>=3.3.0
+
+# Utilidades (Barra de progreso en consola)
+tqdm>=4.60.0
