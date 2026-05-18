@@ -7,7 +7,7 @@ class Config:
     
     # Archivos: Define cómo se llaman los archivos que el programa va a leer y los que va a generar.
     INPUT_FILE = "tweets_limpieza.csv"
-    OUTPUT_FILE = "tweets_analizadosV2.csv"
+    OUTPUT_FILE = "../pagina-web/Violencia-genero/src/data/results.json"
     CHART_FILE = "grafica_sentimientosv2.png"
     
     # Modelos NLP

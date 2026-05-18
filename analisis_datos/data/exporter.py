@@ -15,7 +15,7 @@ class DataExporter:
     def save_results(df: pd.DataFrame, file_path: str, 
                     include_index: bool = False) -> None:
         """
-        Guarda resultados en CSV
+        Guarda resultados en CSV o JSON
         
         Args:
             df: DataFrame con resultados
@@ -26,7 +26,10 @@ class DataExporter:
             Exception: Si hay error en escritura
         """
         try:
-            df.to_csv(file_path, index=include_index)
+            if file_path.endswith('.json'):
+                df.to_json(file_path, orient='records', force_ascii=False, indent=2)
+            else:
+                df.to_csv(file_path, index=include_index)
             logger.info(f"Archivo guardado en: {file_path}")
             logger.info(f"Total de registros: {len(df)}")
         except Exception as e:
