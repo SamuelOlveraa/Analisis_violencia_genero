@@ -1,0 +1,55 @@
+name: Deploy React to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+
+# Permisos necesarios para subir a GitHub Pages
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: "pages"
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./pagina_web # Le decimos que entre a tu subcarpeta
+    steps:
+      - name: Checkout del repositorio
+        uses: actions/checkout@v4
+      
+      - name: Configurar Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: 'npm'
+          cache-dependency-path: ./pagina_web/package-lock.json
+          
+      - name: Instalar dependencias
+        run: npm ci
+        
+      - name: Compilar proyecto (Build)
+        run: npm run build
+        
+      - name: Subir artefacto
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./pagina_web/dist # La carpeta que Vite genera al compilar
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    needs: build
+    runs-on: ubuntu-latest
+    name: Desplegar
+    steps:
+      - name: Desplegar en GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
